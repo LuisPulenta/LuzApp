@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+         	 xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+           	 xmlns:i18n="clr-namespace:LuzApp.Prism.Helpers"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             x:Class="LuzApp.Prism.Views.LoginPage"
+             BackgroundColor="{StaticResource ColorBackground}"
+             Title="{Binding Title}">
+
+  <AbsoluteLayout>
+    <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All" 
+                     Padding="5">
+      <ScrollView>
+        <StackLayout>
+          <Image HeightRequest="150"
+                           Margin="20"
+                           Source="logo"/>
+
+          <StackLayout VerticalOptions="CenterAndExpand">
+            <inputLayout:SfTextInputLayout Hint="Email:" 
+                                                       ContainerType="Outlined">
+              <Entry Placeholder="Ingrese Mail..."
+                                   Keyboard="Email"
+                                   Text="{Binding Email}" />
+            </inputLayout:SfTextInputLayout>
+
+            <inputLayout:SfTextInputLayout Hint="Password:" 
+                                                       EnablePasswordVisibilityToggle="true"
+                                                       ContainerType="Outlined">
+              <Entry Placeholder="Ingrese Password..." 
+                                   IsPassword="True"
+                                   Text="{Binding Password}" />
+            </inputLayout:SfTextInputLayout>
+          </StackLayout>
+
+          <Label FontAttributes="Bold"
+                           HorizontalOptions="Center" 
+                           Text="Olvidó su Password?"
+                           TextColor="{StaticResource ColorAccent}"
+                           VerticalOptions="CenterAndExpand">
+            <Label.GestureRecognizers>
+              <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}"/>
+            </Label.GestureRecognizers>
+          </Label>
+
+        </StackLayout>
+      </ScrollView>
+      <StackLayout VerticalOptions="EndAndExpand">
+        <Button Command="{Binding LoginCommand}" 
+                        IsEnabled="{Binding IsEnabled}"
+                        Text="Ingresar"/>
+        <Button Command="{Binding RegisterCommand}" 
+                        IsEnabled="{Binding IsEnabled}"
+                        Text="Registrarse"
+                        Style="{StaticResource DangerButton}"/>
+      </StackLayout>
+    </StackLayout>
+    <busyindicator:SfBusyIndicator AnimationType="Gear" 
+                                       AbsoluteLayout.LayoutBounds=".5,.5,.5,.5"
+                	                   AbsoluteLayout.LayoutFlags="All"
+                	                   BackgroundColor="Transparent"
+                	                   HorizontalOptions="Center"
+                	                   TextColor="Blue"
+                	                   IsBusy="{Binding IsRunning}"
+                	                   Title="Loading..."
+                	                   VerticalOptions="Center"
+                	                   ViewBoxWidth="80"
+                	                   ViewBoxHeight="80" />
+  </AbsoluteLayout>
+
+</ContentPage>

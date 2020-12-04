@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             x:Class="LuzApp.Prism.Views.TakePhotoPage"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             BackgroundColor="LightSkyBlue"
+             Title="{Binding Title}">
+
+  <AbsoluteLayout>
+    <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All" 
+                     Padding="5">
+      <StackLayout Padding="10">
+        <StackLayout>
+          <Image WidthRequest="80"
+               HeightRequest="80"
+               Grid.Column="0"
+               HorizontalOptions="Start"
+               VerticalOptions="Start"
+               Source="ic_shortcut_add_a_photo.png">
+            <Image.GestureRecognizers>
+              <TapGestureRecognizer Command="{Binding TakePhotoCommand}" />
+            </Image.GestureRecognizers>
+          </Image>
+          <Image WidthRequest="300"
+               HeightRequest="400"
+               Aspect="AspectFit"
+               HorizontalOptions="CenterAndExpand"
+               Source="{Binding ImageSource, Mode=TwoWay}"></Image>
+          <Label
+          Text="Antes de grabar, asegúrese de que la foto sea legible, que está bien enfocada y no esté movida."
+          TextColor="Red"
+          FontAttributes="Bold">
+          </Label>
+        </StackLayout>
+
+        <StackLayout>
+          <ActivityIndicator IsRunning="{Binding IsRunning}"></ActivityIndicator>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal"
+                   VerticalOptions="EndAndExpand">
+          <Button Text="GUARDAR"
+                BackgroundColor="Purple"
+                IsEnabled="{Binding IsEnabled}"
+                Command="{Binding SaveCommand}"
+                CornerRadius="23"
+                TextColor="White"
+                VerticalOptions="EndAndExpand"
+                HorizontalOptions="FillAndExpand"></Button>
+          <Button Text="CANCELAR"
+                BackgroundColor="Red"
+                IsEnabled="{Binding IsEnabled}"
+                Command="{Binding CancelCommand}"
+                CornerRadius="23"
+                TextColor="White"
+                VerticalOptions="EndAndExpand"
+                HorizontalOptions="FillAndExpand"></Button>
+        </StackLayout>
+      </StackLayout>
+    </StackLayout>
+    <busyindicator:SfBusyIndicator AnimationType="Gear" 
+                                       AbsoluteLayout.LayoutBounds=".5,.5,.5,.5"
+                	                   AbsoluteLayout.LayoutFlags="All"
+                	                   BackgroundColor="Transparent"
+                	                   HorizontalOptions="Center"
+                	                   TextColor="{StaticResource ColorAccent}"
+                	                   IsVisible="{Binding IsRunning}"
+                	                   Title="Cargando..."
+                	                   VerticalOptions="Center"
+                	                   ViewBoxWidth="80"
+                	                   ViewBoxHeight="80" />
+  </AbsoluteLayout>
+</ContentPage>

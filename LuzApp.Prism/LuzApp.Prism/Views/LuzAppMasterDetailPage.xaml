@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:prism="http://prismlibrary.com"
+                  xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                  xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+                  BackgroundColor="White"
+                  prism:ViewModelLocator.AutowireViewModel="True"
+                  x:Class="LuzApp.Prism.Views.LuzAppMasterDetailPage">
+
+  <MasterDetailPage.Master>
+    <ContentPage Title="Menu">
+      <StackLayout Padding="20">
+
+        <RelativeLayout>
+          <RelativeLayout.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding ModifyUserCommand}"/>
+          </RelativeLayout.GestureRecognizers>
+
+          <Image x:Name="Logo" HorizontalOptions="Center"
+                           RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent,Property=X,Factor=1,Constant=80}"
+                           HeightRequest="150"
+                 WidthRequest="250"
+                           Source="logo"/>
+
+          <ffimageloading:CachedImage x:Name="Picture" 
+                                                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, ElementName=Logo,Property=Y,Factor=1,Constant=80}"
+                                                Aspect="AspectFill"
+                                                Source="{Binding User.ImageFullPath}" 
+                                                CacheDuration= "50"
+                                                HeightRequest="120"
+                                                WidthRequest="120"
+                                                Margin="5"
+                                                RetryCount= "3"
+                                                RetryDelay= "600">
+            <ffimageloading:CachedImage.Transformations>
+              <fftransformations:CircleTransformation />
+            </ffimageloading:CachedImage.Transformations>
+          </ffimageloading:CachedImage>
+
+
+
+          <Label RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, ElementName=Picture,Property=Y,Factor=1.2,Constant=110}"
+                           FontAttributes="Bold"
+                           FontSize="Large"
+                           Text="{Binding User.FullName}"
+                           TextColor="Black"/>
+          <Label RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, ElementName=Picture,Property=Y,Factor=1.2,Constant=150}"
+                           FontAttributes="Bold"
+                           FontSize="Large"
+                           Text="{Binding User.Neighborhood.Name}"
+                           TextColor="Black"/>
+          <Label RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, ElementName=Picture,Property=Y,Factor=1.2,Constant=190}"
+                           FontAttributes="Bold"
+                           FontSize="Large"
+                           Text=" "
+                           TextColor="Black"/>
+
+
+
+        </RelativeLayout>
+
+
+
+
+
+        <ListView BackgroundColor="Transparent"
+                	      ItemsSource="{Binding Menus}"
+                	      HasUnevenRows="True"
+                	      SeparatorVisibility="None">
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <Grid>
+                  <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SelectMenuCommand}"/>
+                  </Grid.GestureRecognizers>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                  </Grid.ColumnDefinitions>
+                  <Image Grid.Column="0"
+                                    	   HeightRequest="32"
+                                           Margin="5"
+                                    	   Source="{Binding Icon}"
+                                    	   WidthRequest="32"/>
+                  <Label Grid.Column="1"
+                                           FontAttributes="Bold"
+                                   	       VerticalOptions="Center"
+                                   	       TextColor="Black"
+                                   	       Text="{Binding Title}"/>
+                </Grid>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </StackLayout>
+    </ContentPage>
+  </MasterDetailPage.Master>
+
+</MasterDetailPage>

@@ -1,9 +1,11 @@
 ﻿using LuzApp.Common.Entities;
+using LuzApp.Web.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace LuzApp.Web.Data
 {
-    public class DataContext : DbContext
+    public class DataContext: IdentityDbContext<User>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -14,6 +16,12 @@ namespace LuzApp.Web.Data
         public DbSet<City> Cities { get; set; }
 
         public DbSet<Neighborhood> Neighborhoods { get; set; }
+
+        public DbSet<Luminary> Luminaries { get; set; }
+
+        public DbSet<LuminaryImage> LuminaryImages { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
